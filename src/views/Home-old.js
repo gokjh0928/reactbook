@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PostList from '../components/PostList'
 
 export default class Home extends Component
 {
@@ -25,8 +24,22 @@ export default class Home extends Component
 
                 <hr />
 
-                <PostList posts={this.props.posts} />
+                <ul className="list-group">
+                    {this.props.posts.map(post => (
+                        <li className="list-group-item">
+                            <p>
+                                <a href=".">{ post.body }</a>
+                            </p>
+                            <div>
+                                <span>
+                                    <cite>&mdash; {post.user.firstName} {post.user.lastName}</cite>
+                                    <small className="float-right">Time</small>
+                                </span>
 
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
         )
     }
