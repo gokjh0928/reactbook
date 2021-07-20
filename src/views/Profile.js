@@ -13,7 +13,11 @@ export default class Profile extends Component
             profileImage: event.target.profile_image.value,
         }
 
-        console.log(formData)
+        console.log(formData);
+
+        fetch('/api/test')
+            .then(res => res.json())
+            .then(data => console.log(data))
     }
 
     render()
