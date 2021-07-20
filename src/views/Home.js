@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PostList from '../components/PostList'
 
 export default class Home extends Component {
     render() {
@@ -21,20 +22,7 @@ export default class Home extends Component {
 
                 <hr />
 
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <p>
-                            <a href=".">Paragraph</a>
-                        </p>
-                        <div>
-                            <span>
-                                <cite>&mdash; First Last</cite>
-                                <small class="float-right">Time</small>
-                            </span>
-
-                        </div>
-                    </li>
-                </ul>
+                <PostList posts={this.props.posts}/>
             </div>
         )
     }

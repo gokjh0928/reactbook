@@ -4,8 +4,9 @@ import Main from './views/Main'
 export default class App extends Component {
   constructor() {
     console.log("Constructed")
-    super();
+    super();  // get all the functionality of the Component class that App extends from
 
+    // now make a new object
     this.state = {
       posts: []
 

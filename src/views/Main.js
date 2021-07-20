@@ -19,11 +19,11 @@ export default class Main extends Component {
 
                 <main className="container">
                     <Switch>
-                        <Route path={'/'} render={() => <Home posts={this.props.posts}/>} />
-                        <Route path={'/profile'} render={() => <Profile />} />
-                        <Route path={'/contact'} render={() => <Contact />} />
-                        <Route path={'/shop'} render={() => <Products />} />
-                        <Route path={'/shop/cart'} render={() => <Cart />} />
+                        <Route exact path={'/'} render={() => <Home posts={this.props.posts}/>} />
+                        <Route exact path={'/profile'} render={() => <Profile />} />
+                        <Route exact path={'/contact'} render={() => <Contact />} />
+                        <Route exact path={'/shop'} render={() => <Products />} />
+                        <Route exact path={'/shop/cart'} render={() => <Cart />} />
                     </Switch>
                 </main>
 
