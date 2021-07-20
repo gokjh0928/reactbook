@@ -1,26 +1,19 @@
-import React, { Component } from 'react'
-import Main from './views/Main'
+import React, { useEffect, useState } from 'react';
+import { Main } from './views/Main';
 
-export default class App extends Component {
-  constructor() {
-    super();
+export const App = () => {
+  const [posts, setPosts] = useState([]);
 
-    this.state = {
-      posts: []
-    }
-  }
-
-  componentDidMount() {
+  const getPosts = () => {
     // Pulling data from Flask API
     fetch('/api/blog')
       .then(res => res.json())
-      .then(data => {
-        this.setState({
-          posts: data
-        })
+      .then(data =>
+      {
+        setPosts(data)
       })
 
-      // Pulling data from .json file
+    // Pulling data from .json file
     // fetch('./posts.json')
     //   .then(res => res.json())
     //   .then(data => {
@@ -30,12 +23,13 @@ export default class App extends Component {
     //   })
   }
 
-  render() {
+  useEffect(() => {
+    getPosts();
+  }, []);
 
-    return (
-      <div>
-        <Main posts={this.state.posts} />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Main posts={posts} />
+    </div>
+  )
 }
