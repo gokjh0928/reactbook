@@ -3,7 +3,6 @@ import Main from './views/Main'
 
 export default class App extends Component {
   constructor() {
-    console.log('Constructed')
     super();
 
     this.state = {
@@ -12,7 +11,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log('Mounted')
     fetch('./posts.json')
       .then(res => res.json())
       .then(data => {
@@ -23,7 +21,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log('Rendered')
 
     return (
       <div>
