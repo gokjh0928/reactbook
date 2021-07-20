@@ -1,7 +1,22 @@
 import React, { Component } from 'react'
+import PostList from '../components/PostList';
 
 export default class Profile extends Component
 {
+    constructor() {
+        super();
+
+        this.state = {
+            posts: []
+        }
+    }
+
+    componentDidMount() {
+        fetch('/api/blog/user')
+            .then( res => res.json() )
+            .then( data => this.setState({ posts: data }) )
+    }
+
     handleClick = (event) => {
         event.preventDefault();
 
@@ -14,10 +29,6 @@ export default class Profile extends Component
         }
 
         console.log(formData);
-
-        fetch('/api/test')
-            .then(res => res.json())
-            .then(data => console.log(data))
     }
 
     render()
@@ -81,20 +92,7 @@ export default class Profile extends Component
 
                 <div className="row">
                     <div className="col-md-12">
-                        <ul className="list-group">
-                            <li className="list-group-item">
-                                <p>
-                                    <a href=".">Body</a>
-                                </p>
-                                <div>
-                                    <span>
-                                        <cite>&mdash; First Last</cite>
-                                        <small className="float-right">Date</small>
-                                    </span>
-
-                                </div>
-                            </li>
-                        </ul>
+                        <PostList posts={this.state.posts} />
                     </div>
                 </div>
             </div>

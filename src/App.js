@@ -11,13 +11,23 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch('./posts.json')
+    // Pulling data from Flask API
+    fetch('/api/blog')
       .then(res => res.json())
       .then(data => {
         this.setState({
           posts: data
         })
       })
+
+      // Pulling data from .json file
+    // fetch('./posts.json')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     this.setState({
+    //       posts: data
+    //     })
+    //   })
   }
 
   render() {
