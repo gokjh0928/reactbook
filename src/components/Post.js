@@ -9,8 +9,9 @@ export const Post = (props) => {
             </p>
             <div>
                 <span>
-                    <cite>&mdash; {props.post.user.first_name} {props.post.user.last_name}</cite>
-                    <small className="float-right">{moment(props.post.date_created).fromNow()}</small>
+                    <cite>&mdash; {props.post.userId}</cite>
+                    {/* <cite>&mdash; {props.post.user.first_name} {props.post.user.last_name}</cite> */}
+                    <small className="float-right">{moment(props.post.dateCreated).fromNow()}</small>
                 </span>
 
             </div>
