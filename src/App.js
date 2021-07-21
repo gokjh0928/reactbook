@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Main } from './views/Main';
 import firebase from './firebase';
+import { useAuth } from './contexts/AuthContext';
 
 export const App = () => {
   const [posts, setPosts] = useState([]);
   const db = firebase.firestore();
+  const { signIn } = useAuth();
+  // console.log(signIn)
 
   const getPosts = () => {
     // Pulling data from Flask API
@@ -45,7 +48,7 @@ export const App = () => {
 
   return (
     <div>
-      <Main posts={posts} />
+      <Main signIn={signIn} posts={posts} />
     </div>
   )
 }

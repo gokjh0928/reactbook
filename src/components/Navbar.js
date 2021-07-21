@@ -1,7 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-export const Navbar = () => {
+export const Navbar = (props) => {
+    const { currentUser, logout } = useAuth();
+    // console.log(currentUser)
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        props.signIn();
+        console.log('Logged in successfully')
+    }
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        logout();
+    }
+
     return (
         <nav className="navbar navbar-expand-sm navbar-light bg-light">
             <Link className="navbar-brand" to="/">Reactbook</Link>
@@ -28,10 +43,23 @@ export const Navbar = () => {
                         </div>
                     </li>
                 </ul>
-                <form className="form-inline my-2 my-lg-0">
+                {/* <form className="form-inline my-2 my-lg-0">
                     <input className="form-control mr-sm-2" type="text" placeholder="Search" />
                     <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                </form> */}
+                <ul className="navbar-nav ml-auto">
+                    {
+                        !currentUser
+                        ?
+                        <li className="nav-item">
+                            <Link onClick={(e) => handleLogin(e)} className="nav-link" to="">Login</Link>
+                        </li>
+                        :
+                        <li className="nav-item">
+                            <Link onClick={(e) => handleLogout(e)} className="nav-link" to="">Logout</Link>
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     )

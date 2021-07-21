@@ -13,7 +13,7 @@ export const Main = (props) =>
     return (
         <div>
             <header>
-                <Navbar />
+                <Navbar signIn={props.signIn} />
             </header>
 
             <main className="container">

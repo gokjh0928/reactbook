@@ -4,7 +4,7 @@ import { Post } from './Post'
 export const PostList = (props) => {
     return (
         <ul className="list-group">
-            {props.posts.map(p => <Post key={p.id} post={p} />)}
+            {props.posts.map(p => <Post key={p.postId} post={p} />)}
         </ul>
     )
 }
