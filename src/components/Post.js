@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import firebase from '../firebase';
+import { Link } from 'react-router-dom';
 
 export const Post = (props) => {
     const db = firebase.firestore();
@@ -13,7 +14,7 @@ export const Post = (props) => {
                 {
                     !props.match
                     ?
-                        (<a href={`/blog/${ props.post.postId }`}>{props.post.body}</a>)
+                        (<Link to={`/blog/${ props.post.postId }`}>{props.post.body}</Link>)
                     :
                         (<p>{props.post.body}</p>)
                 }
