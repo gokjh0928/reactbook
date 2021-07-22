@@ -16,7 +16,7 @@ export const Post = (props) => {
                     ?
                         (<Link to={`/blog/${ props.post.postId }`}>{props.post.body}</Link>)
                     :
-                        (<p>{props.post.body}</p>)
+                        props.post.body
                 }
             </p>
             <div>
