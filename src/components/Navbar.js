@@ -49,7 +49,7 @@ export const Navbar = (props) => {
                 </form> */}
                 <ul className="navbar-nav ml-auto">
                     {
-                        !currentUser
+                        !currentUser.loggedIn
                         ?
                         <li className="nav-item">
                             <Link onClick={(e) => handleLogin(e)} className="nav-link" to="">Login</Link>

@@ -1,26 +1,33 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { PostList } from '../components/PostList';
 import { useAuth } from '../contexts/AuthContext';
+import { DataContext } from '../contexts/DataProvider';
 import firebase from '../firebase'
 
 export const Home = (props) => {
     const { currentUser } = useAuth();
+    const { postList, getPosts } = useContext(DataContext);
 
     const addPost = (e) => {
         e.preventDefault();
 
         const formData = {
             body: e.target.body.value,
-            dateCreated: new Date(),
+            dateCreated: firebase.firestore.Timestamp.fromDate(new Date()),
             dateUpdated: null,
             userId: currentUser.id
         }
 
         firebase.firestore().collection('posts').add( formData )
-            .then((docRef) => console.log('New record created'))
+            .then((docRef) => {
+                // In the db, the posts are already supplied. This is where we will re-render/update our list of posts in the DOM.
+                getPosts();
+                console.log('New record created');
+            })
             .catch(err => console.error(err))
 
-        console.log(formData);
+        
+        // console.log(formData);
     }
 
     return (
@@ -43,7 +50,7 @@ export const Home = (props) => {
 
             <hr />
 
-            <PostList posts={props.posts} />
+            <PostList posts={postList[0]} />
 
         </div>
     )
