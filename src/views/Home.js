@@ -25,7 +25,7 @@ export const Home = (props) => {
 
     return (
         <div>
-            <h3>Home</h3>
+            <h3 style={ { fontSize: '35px' } }>Home</h3>
             <hr />
 
             <form onSubmit={(e) => addPost(e)} action="" method="POST">

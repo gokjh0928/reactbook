@@ -5,7 +5,13 @@ export const Post = (props) => {
     return (
         <li className="list-group-item">
             <p>
-                <a href=".">{props.post.body}</a>
+                {
+                    !props.match
+                    ?
+                        (<a href={`/blog/${ props.post.postId }`}>{props.post.body}</a>)
+                    :
+                        (<p>{props.post.body}</p>)
+                }
             </p>
             <div>
                 <span>
