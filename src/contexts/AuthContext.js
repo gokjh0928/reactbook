@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import firebase from '../firebase';
+import { DataContext } from './DataProvider';
 
 const AuthContext = React.createContext();
 
@@ -8,8 +9,12 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({ children }) => {
+    const childRef = useRef();
     const [currentUser, setCurrentUser] = useState({ loggedIn: false });
     const auth = new firebase.auth.GoogleAuthProvider();
+
+    console.log(childRef)
+    // childRef.current.getCartItems()
 
     function signIn() {
         return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -63,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     // };
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={value} ref={childRef}>
             { children }
         </AuthContext.Provider>
     )

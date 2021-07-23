@@ -1,15 +1,74 @@
-import React, { useEffect, useState, createContext, useCallback } from 'react';
+import React, { useEffect, useState, createContext, useCallback, forewardRef, forwardRef } from 'react';
 import firebase from '../firebase';
 import { useAuth } from './AuthContext';
-import Stripe from 'stripe';
 
 export const DataContext = createContext();
 
 export const DataProvider = (props) => {
     const db = firebase.firestore();
     const [posts, setPosts] = useState([]);
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState({ items: {}, quantity: 0, subtotal: 0, grandtotal: 0 });
     const { currentUser } = useAuth();
+
+    const getCartItems = forwardRef(() => {
+            if (currentUser.loggedIn)
+            {
+                console.log(currentUser);
+                // if they have items in their cart
+                if (cart.hasOwnProperty('items'))
+                {
+                    function getCart()
+                    {
+                        // show their database copy of the cart
+                        let data = {};
+                        db.collection('users').doc(currentUser.id).collection('cart').get()
+                            .then(snapshot =>
+                            {
+                                snapshot.forEach(ref =>
+                                {
+                                    data[ ref.id ] = ref.data()
+                                    // .push(ref.data());
+                                })
+                                setCart({ items: data, quantity: 0, subtotal: 0, grandtotal: 0 });
+                            })
+                    }
+                    getCart()
+                }
+            }
+            // eslint-disable-next-line
+        })
+
+    // useEffect(() => {
+        
+    // })
+
+    // const getCartItems = () => {
+    //     if (currentUser.loggedIn)
+    //     {
+    //         console.log(currentUser);
+    //         // if they have items in their cart
+    //         if (cart.hasOwnProperty('items'))
+    //         {
+    //             function getCart()
+    //             {
+    //                 // show their database copy of the cart
+    //                 let data = {};
+    //                 db.collection('users').doc(currentUser.id).collection('cart').get()
+    //                     .then(snapshot =>
+    //                     {
+    //                         snapshot.forEach(ref =>
+    //                         {
+    //                             data[ ref.id ] = ref.data()
+    //                             // .push(ref.data());
+    //                         })
+    //                         setCart({ items: data, quantity: 0, subtotal: 0, grandtotal: 0 });
+    //                     })
+    //             }
+    //             getCart()
+    //         }
+    //     }
+    // }
 
     useEffect(() => {
         var newProducts = []

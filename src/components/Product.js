@@ -1,8 +1,33 @@
-import React from 'react'
+import React from 'react';
+import firebase from 'firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Product = (props) => {
+    const { currentUser } = useAuth();
+
+    const db = firebase.firestore();
     const handleClick = (obj) => {
-        console.log(obj);
+        // let o = {...obj, quantity}
+        db.collection('users').doc(currentUser.id).collection('cart').doc(props.product.id).get()
+            .then(productRef => {
+                    // create data variable, because we need to make sure it exists
+                    let data;
+                    // if the product.id in the currentUser's cart already exists 
+                    if (productRef.exists) {
+                        // the quantity attribute should already be set by default, so we can increment its total
+                        data = productRef.data();
+                        data.quantity+=1;
+                    }
+                    // otherwise if the product.id has not been found in the currentUser's cart
+                    else {
+                        // The quantity attribute does not yet exist, so we will create it and set its value to 1
+                        data = obj;
+                        data.quantity = 1;
+                    }
+                    // Then we will update the currentUser's cart with the product supplied to us from 'data'
+                    db.collection('users').doc(currentUser.id).collection('cart').doc(props.product.id).set(data);
+                    // console.log(data);
+                })
     }
 
     return (

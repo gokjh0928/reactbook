@@ -42,6 +42,15 @@ export const Navbar = (props) => {
                             <Link className="dropdown-item" to="/shop/cart">Cart</Link>
                         </div>
                     </li>
+                    <li className="nav-item">
+                        
+                        <h4>
+                            <span className="badge badge-secondary">
+                                <i className="fa fa-shopping-cart"> 0 | $0.00 </i>
+                            </span>
+                        </h4>
+                        {/* <Link className="nav-link" to="/contact">Contact</Link> */}
+                    </li>
                 </ul>
                 {/* <form className="form-inline my-2 my-lg-0">
                     <input className="form-control mr-sm-2" type="text" placeholder="Search" />
