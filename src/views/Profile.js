@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { PostList } from '../components/PostList';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Profile = () =>
 {
     const [posts, setPosts] = useState([]);
+    const { currentUser } = useAuth();
 
     useEffect(() => {
         fetch('/api/blog/user')
@@ -35,7 +37,7 @@ export const Profile = () =>
 
             <div className="row">
                 <div className="col-md-4">
-                    <img className="img-fluid" src="" alt="profile" />
+                    <img className="img-fluid" src={ currentUser.image } alt="profile" />
                 </div>
                 <div className="col-md">
                     <form onSubmit={(e) => handleClick(e)} action="" method="POST" encType="multipart/form-data">

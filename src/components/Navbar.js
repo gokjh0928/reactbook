@@ -36,7 +36,7 @@ export const Navbar = (props) => {
                         <Link className="nav-link" to="/contact">Contact</Link>
                     </li>
                     <li className="nav-item dropdown">
-                        <Link className="nav-link dropdown-toggle" to="." id="dropdownId" data-toggle="dropdown">Shop</Link>
+                        <a className="nav-link dropdown-toggle" href="." id="dropdownId" data-toggle="dropdown">Shop</a>
                         <div className="dropdown-menu" aria-labelledby="dropdownId">
                             <Link className="dropdown-item" to="/shop">Products</Link>
                             <Link className="dropdown-item" to="/shop/cart">Cart</Link>

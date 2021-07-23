@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import firebase from '../firebase';
+// import firebase from '../firebase';
 import { Link } from 'react-router-dom';
 
 export const Post = (props) => {
-    const db = firebase.firestore();
+    // const db = firebase.firestore();
     // console.log(moment(props.post.dateCreated.toDate()).fromNow())
     // const name = db.collection('posts')
 

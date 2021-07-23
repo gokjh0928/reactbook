@@ -5,9 +5,9 @@ import { Home } from './Home';
 import { Profile } from './Profile';
 import { Contact } from './Contact';
 import '../custom.css';
-import { Products } from './Products';
 import { Cart } from './Cart';
 import { BlogSingle } from './BlogSingle';
+import { Shop } from './Shop';
 
 export const Main = (props) =>
 {
@@ -26,7 +26,7 @@ export const Main = (props) =>
                     <Route exact path={'/profile'} render={() => <Profile />} />
                     <Route exact path={'/contact'} render={() => <Contact />} />
                     {/* SHOP ROUTES */}
-                    <Route exact path={'/shop'} render={() => <Products />} />
+                    <Route exact path={'/shop'} render={() => <Shop />} />
                     <Route exact path={'/shop/cart'} render={() => <Cart />} />
                     {/* SHOP ROUTES */}
                 </Switch>
