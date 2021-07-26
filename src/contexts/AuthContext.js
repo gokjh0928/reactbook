@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({ loggedIn: false });
     const auth = new firebase.auth.GoogleAuthProvider();
 
-    console.log(childRef)
+    // console.log(childRef)
     // childRef.current.getCartItems()
 
     function signIn() {

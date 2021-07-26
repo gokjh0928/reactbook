@@ -11,37 +11,51 @@ export const DataProvider = (props) => {
     const [cart, setCart] = useState({ items: {}, quantity: 0, subtotal: 0, grandtotal: 0 });
     const { currentUser } = useAuth();
 
-    const getCartItems = forwardRef(() => {
+    function getCart()
+    {
+        // show their database copy of the cart
+        let data = {};
+        let quantity = 0;
+        let subtotal = 0;
+        let grandtotal = 0;
+        let taxes = 0;
+
+        db.collection('users').doc(currentUser.id).collection('cart').get()
+            .then(snapshot =>
+            {
+                snapshot.forEach(ref =>
+                {
+                    let product = ref.data();
+                    data[ ref.id ] = product
+                    
+                    // update cart values
+                    quantity += product.quantity;
+                    subtotal += parseFloat(product.price) * quantity;
+                    taxes += parseFloat(product.tax) * quantity;
+                    grandtotal += subtotal + taxes;
+                })
+                setCart({
+                    items: data, 
+                    quantity, 
+                    subtotal: (subtotal / 100).toFixed(2), 
+                    taxes: (taxes / 100).toFixed(2), 
+                    grandtotal: (grandtotal / 100).toFixed(2) 
+                });
+            })
+    }
+
+    useEffect(() => {
             if (currentUser.loggedIn)
             {
-                console.log(currentUser);
+                // console.log(currentUser);
                 // if they have items in their cart
                 if (cart.hasOwnProperty('items'))
                 {
-                    function getCart()
-                    {
-                        // show their database copy of the cart
-                        let data = {};
-                        db.collection('users').doc(currentUser.id).collection('cart').get()
-                            .then(snapshot =>
-                            {
-                                snapshot.forEach(ref =>
-                                {
-                                    data[ ref.id ] = ref.data()
-                                    // .push(ref.data());
-                                })
-                                setCart({ items: data, quantity: 0, subtotal: 0, grandtotal: 0 });
-                            })
-                    }
                     getCart()
                 }
             }
             // eslint-disable-next-line
-        })
-
-    // useEffect(() => {
-        
-    // })
+        }, [db, currentUser.loggedIn])
 
     // const getCartItems = () => {
     //     if (currentUser.loggedIn)
@@ -117,7 +131,7 @@ export const DataProvider = (props) => {
     }, [ currentUser.loggedIn, getPosts ])
 
     return (
-        <DataContext.Provider value={ { postList: [posts, setPosts], getPosts, products } }>
+        <DataContext.Provider value={ { postList: [posts, setPosts], getPosts, products, getCart, cart } }>
             { props.children }
         </DataContext.Provider>
     )

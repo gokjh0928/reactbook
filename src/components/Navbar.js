@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { DataContext } from '../contexts/DataProvider';
 
 export const Navbar = (props) => {
     const { currentUser, logout } = useAuth();
-    // console.log(currentUser)
+    const { cart } = useContext(DataContext);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -46,7 +47,7 @@ export const Navbar = (props) => {
                         
                         <h4>
                             <span className="badge badge-secondary">
-                                <i className="fa fa-shopping-cart"> 0 | $0.00 </i>
+                                <i className="fa fa-shopping-cart"> { cart.quantity } | ${ cart.subtotal } </i>
                             </span>
                         </h4>
                         {/* <Link className="nav-link" to="/contact">Contact</Link> */}
