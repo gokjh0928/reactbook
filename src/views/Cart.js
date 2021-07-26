@@ -1,15 +1,40 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { CartItem } from '../components/CartItem'
-import { DataContext } from '../contexts/DataProvider'
+import { useAuth } from '../contexts/AuthContext';
+import { DataContext } from '../contexts/DataProvider';
+import firebase from '../firebase';
 
 export const Cart = () =>
 {
-    const { cart } = useContext(DataContext);
+    const db = firebase.firestore();
+    const { currentUser } = useAuth();
+    const { cart, getCart } = useContext(DataContext);
+    const [newCart, setNewCart] = useState({});
 
-    const handleUpdate = () => {
-        console.log("It works");
-        // console.log(prodQty);
+    const handleUpdate = (infoObj) => {
+        if (infoObj.id in newCart) {
+            let newDict = {...newCart};
+            newDict[infoObj.id] = infoObj.quantity;
+            setNewCart(newDict);
+        }
+        else {
+            let newDict = {};
+            newDict[infoObj.id] = infoObj.quantity;
+            setNewCart({...newCart, ...newDict })
+        }
     }
+
+    useEffect(() => {
+        Object.keys(newCart).forEach(prod =>
+        {
+            db.collection('users').doc(currentUser.id).collection('cart').doc(prod).update({
+                quantity: newCart[ prod ]
+            }).catch(err => console.error(err))
+        })
+        getCart();
+        // eslint-disable-next-line
+    }, [ newCart, currentUser.id, db ])
 
     return (
         <div>
@@ -20,20 +45,15 @@ export const Cart = () =>
                 <div className="card-header bg-dark text-light">
                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                     Shopping Cart
-                    <a href="." className="btn btn-outline-info btn-sm pull-right">Continue Shopping</a>
+                    <Link to="/shop" className="btn btn-outline-info btn-sm pull-right">Continue Shopping</Link>
                     <div className="clearfix"></div>
                 </div>
                 <div className="card-body">
 
                     {/* <!-- PRODUCTS --> */}
-                    { Object.values(cart.items).map(productInfo => <CartItem key={ productInfo.id } data={ productInfo } />) }
+                    {Object.values(cart.items).map(productInfo => <CartItem handleUpdate={handleUpdate} key={ productInfo.id } data={ productInfo } />) }
                     {/* <!-- END PRODUCTS --> */}
 
-                    <div className="pull-right">
-                        <button onClick={() => handleUpdate()} className="btn btn-outline-secondary pull-right">
-                            Update Shopping Cart
-                        </button>
-                    </div>
                 </div>
                 <div className="card-footer">
                     {/* <!-- <div className="coupon col-md-5 col-sm-5 no-padding-left pull-left">
@@ -48,13 +68,13 @@ export const Cart = () =>
                                             </div> --> */}
                     <div className="text-right">
                         <div className="cart-totals">
-                            Subtotal: <b>$0.00</b>
+                            Subtotal: <b>${ cart.subtotal }</b>
                         </div>
                         <div className="cart-totals">
-                            Tax: <b>$0.00</b>
+                            Tax: <b>${ cart.taxes }</b>
                         </div>
                         <div className="cart-totals">
-                            Grand total: <b>$0.00</b>
+                            Grand total: <b>${ cart.grandtotal }</b>
                         </div>
                     </div>
                     <div className="pull-right" style={{ margin: "10px" }}>
