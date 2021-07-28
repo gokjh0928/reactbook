@@ -131,7 +131,7 @@ export const DataProvider = (props) => {
     }, [ currentUser.loggedIn, getPosts ])
 
     return (
-        <DataContext.Provider value={ { postList: [posts, setPosts], getPosts, products, getCart, cart } }>
+        <DataContext.Provider value={ { postList: [posts, setPosts], getPosts, products, getCart, cart, setCart } }>
             { props.children }
         </DataContext.Provider>
     )
