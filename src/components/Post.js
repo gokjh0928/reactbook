@@ -1,19 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
+import moment from 'moment'
 
-export default class Post extends Component {
-    render() {
-        return (
-            <li class="list-group-item">
-                <p>
-                    <a href=".">{this.props.post.body}</a>
-                </p>
-                <div>
-                    <span>
-                        <cite>&mdash; {this.props.post.user.firstName} {this.props.post.user.lastName}</cite>
-                        <small class="float-right">Time</small>
-                    </span>
-                </div>
-            </li>
-        )
-    }
+// doesn't use this.props anymore since not a class component anymore
+export const Post = (props) => {
+    return (
+        <li class="list-group-item">
+            <p>
+                <a href=".">{props.post.body}</a>
+            </p>
+            <div>
+                <span>
+                    <cite>&mdash; {props.post.userId}</cite>
+                    {/* <cite>&mdash; {props.post.user.first_name} {props.post.user.last_name}</cite> */}
+                    {/* Get the days passed since the post was created using moment library */}
+                    <small class="float-right">{moment(props.post.dateCreated).fromNow()}</small>
+                </span>
+            </div>
+        </li>
+    )
 }
