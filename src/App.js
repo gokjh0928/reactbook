@@ -6,13 +6,21 @@ import firebase from './firebase';
 import { useAuth } from './contexts/AuthContext';
 import { useCallback } from 'react/cjs/react.production.min';
 
-// Class methods would do export default class
+
+// index -> App -> Main -> Navbar, Home, Profile, Contact
+// posts -> App(state) -> Main(props) -> Home(props)
+
+// Class methods would do "export default class"
 export const App = () => {
+  // set initialize state of posts
   const [posts, setPosts] = useState([]);
+
   const db = firebase.firestore();
   const { signIn } = useAuth();
   // console.log(signIn)
 
+
+  // getPosts is basically componentDidMount(I gave it a different name)
   const getPosts = useCallback(() => {
     let newPosts = [];
 

@@ -16,7 +16,7 @@ export const Profile = () =>
             .then(res => res.json())
             // updates the posts "state"
             .then(data => setPosts(data))
-    })
+    }, [])
 
     // An event to handle clicking of submit button
     // can pass in event object, which we name e, to actions like onClick so we can prevent page refresh
