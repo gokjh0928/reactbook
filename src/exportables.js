@@ -1,3 +1,4 @@
-// export default const firstName = () => 'Jay';
-// export const lastName = 'Kim'
-// export const email = 'gokjh0928@gmail.com'
+export const firstName = 'Derek';
+export const lastName = 'Hawkins';
+export const email = 'derekh@codingtemple.com';
+

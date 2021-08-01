@@ -1,10 +1,9 @@
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-import firebase from "firebase/app";
-// If you enabled Analytics in your project, add the Firebase SDK for Analytics
-import "firebase/analytics";
-// Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/firestore";
+import firebase from 'firebase/app';
+
+import 'firebase/analytics';
+import 'firebase/auth';
+import 'firebase/firestore';
+
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -17,7 +16,6 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 export default firebase;

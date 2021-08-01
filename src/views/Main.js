@@ -5,13 +5,15 @@ import { Home } from './Home';
 import { Profile } from './Profile';
 import { Contact } from './Contact';
 import '../custom.css';
-import { Products } from './Products';
 import { Cart } from './Cart';
-// Also, can't import cdn from Bootstrap using this method
+import { BlogSingle } from './BlogSingle';
+import { Shop } from './Shop';
+import { useAuth } from '../contexts/AuthContext';
+import { NotAuthenticated } from './NotAuthenticated';
 
-// index -> App -> Main -> Navbar, Home, Profile, Contact
-// posts -> App(state) -> Main(props) -> Home(props)
-export const Main = (props) => {
+export const Main = (props) =>
+{
+    const { currentUser } = useAuth();
     return (
         <div>
             <header>
@@ -19,13 +21,26 @@ export const Main = (props) => {
             </header>
 
             <main className="container">
-                <Switch>
-                    <Route exact path={'/'} render={() => <Home posts={props.posts} />} />
-                    <Route exact path={'/profile'} render={() => <Profile />} />
-                    <Route exact path={'/contact'} render={() => <Contact />} />
-                    <Route exact path={'/shop'} render={() => <Products />} />
-                    <Route exact path={'/shop/cart'} render={() => <Cart />} />
-                </Switch>
+                {
+                    !currentUser.loggedIn
+                    ?
+                        <React.Fragment>
+                            <NotAuthenticated />
+                        </React.Fragment>
+                    :
+                        <Switch>
+                            <Route exact path={'/'} render={() => <Home posts={props.posts} />} />
+                            {/* BLOG ROUTES */}
+                            <Route exact path={'/blog/:id'} render={({ match }) => <BlogSingle match={match} />} />
+                            {/* BLOG ROUTES */}
+                            <Route exact path={'/profile'} render={() => <Profile />} />
+                            <Route exact path={'/contact'} render={() => <Contact />} />
+                            {/* SHOP ROUTES */}
+                            <Route exact path={'/shop'} render={() => <Shop />} />
+                            <Route exact path={'/shop/cart'} render={() => <Cart />} />
+                            {/* SHOP ROUTES */}
+                        </Switch>
+                }
             </main>
 
             <footer>

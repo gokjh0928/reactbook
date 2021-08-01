@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { DataContext } from '../contexts/DataProvider';
 
 export const Navbar = (props) => {
     const { currentUser, logout } = useAuth();
-    // console.log(currentUser)
+    const { cart, setCart } = useContext(DataContext);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -14,6 +15,7 @@ export const Navbar = (props) => {
 
     const handleLogout = (e) => {
         e.preventDefault();
+        setCart({ items: {}, quantity: 0, subtotal: 0, grandtotal: 0 });
         logout();
     }
 
@@ -36,11 +38,20 @@ export const Navbar = (props) => {
                         <Link className="nav-link" to="/contact">Contact</Link>
                     </li>
                     <li className="nav-item dropdown">
-                        <Link className="nav-link dropdown-toggle" to="." id="dropdownId" data-toggle="dropdown">Shop</Link>
+                        <a className="nav-link dropdown-toggle" href="." id="dropdownId" data-toggle="dropdown">Shop</a>
                         <div className="dropdown-menu" aria-labelledby="dropdownId">
                             <Link className="dropdown-item" to="/shop">Products</Link>
                             <Link className="dropdown-item" to="/shop/cart">Cart</Link>
                         </div>
+                    </li>
+                    <li className="nav-item">
+                        
+                        <h4>
+                            <span className="badge badge-secondary">
+                                <i className="fa fa-shopping-cart"> { cart.quantity } | ${ cart.subtotal } </i>
+                            </span>
+                        </h4>
+                        {/* <Link className="nav-link" to="/contact">Contact</Link> */}
                     </li>
                 </ul>
                 {/* <form className="form-inline my-2 my-lg-0">
@@ -49,15 +60,15 @@ export const Navbar = (props) => {
                 </form> */}
                 <ul className="navbar-nav ml-auto">
                     {
-                        !currentUser
-                            ?
-                            <li className="nav-item">
-                                <Link onClick={(e) => handleLogin(e)} className="nav-link" to="">Login</Link>
-                            </li>
-                            :
-                            <li className="nav-item">
-                                <Link onClick={(e) => handleLogout(e)} className="nav-link" to="">Logout</Link>
-                            </li>
+                        !currentUser.loggedIn
+                        ?
+                        <li className="nav-item">
+                            <Link onClick={(e) => handleLogin(e)} className="nav-link" to="">Login</Link>
+                        </li>
+                        :
+                        <li className="nav-item">
+                            <Link onClick={(e) => handleLogout(e)} className="nav-link" to="">Logout</Link>
+                        </li>
                     }
                 </ul>
             </div>

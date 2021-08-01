@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { DataContext } from '../contexts/DataProvider';
 import { Post } from './Post'
 
 export const PostList = (props) => {
+    const { postList } = useContext(DataContext);
+    const [ posts ] = postList;
+
     return (
-        <ul class="list-group">
-            {/* Get each post from posts and create a Post with a key */}
-            {/* Need a key prop for each post since each child in a list should have a unique key prop */}
-            {props.posts.map(p => <Post key={p.postId} post={p} />)}
+        <ul className="list-group">
+            {posts.map(p => <Post key={p.postId} post={p} />)}
         </ul>
     )
 }
-

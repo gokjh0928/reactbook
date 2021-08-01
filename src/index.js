@@ -5,17 +5,15 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-
-
-// index -> App -> Main -> Navbar, Home, Profile, Contact
-// posts -> App(state) -> Main(props) -> Home(props)
+import { DataProvider } from './contexts/DataProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* Router allows for a simple DOM refresh instead of refreshing the page */}
     <Router>
       <AuthProvider>
-        <App />
+        <DataProvider>
+          <App />
+        </DataProvider>
       </AuthProvider>
     </Router>
   </React.StrictMode>,
