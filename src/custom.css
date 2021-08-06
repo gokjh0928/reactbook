@@ -1,3 +1,12 @@
 header {
     margin-bottom: 35px;
 }
+
+.fill-container {
+    width: 100%;
+}
+
+.cart_icon {
+    margin: '0 1px';
+
+}

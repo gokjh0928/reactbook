@@ -20,4 +20,5 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Allows this firebase to be available to other files
 export default firebase;
