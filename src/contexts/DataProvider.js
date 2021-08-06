@@ -64,7 +64,7 @@ export const DataProvider = (props) => {
         fetch('/api/shop/products')
             .then(res => res.json())
             .then(products => {
-                console.log(products.data)
+                // console.log(products.data)
                 // spread the products and put each into an array
                 newProducts = [...products.data];
 

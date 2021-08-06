@@ -44,8 +44,12 @@ export const Profile = () => {
             bio: event.target.bio.value,
         }
         // now update the current user's document data with what's in the form
-        db.collection('users').doc(currentUser.id).set(formData);
-        alert('Updated profile')
+        db.collection('users').doc(currentUser.id).update(formData)
+            .then(() => {
+                // alert('Updated profile');
+                getUserData();
+            })
+        
     }
 
     const getUserData = useCallback(() => {
@@ -53,7 +57,8 @@ export const Profile = () => {
         db.collection('users').doc(currentUser.id).get().then((doc) => {
             if (doc.exists) {
                 // console.log("Document data:", doc.data());
-                setData({ ...doc.data() });
+                setData(doc.data());
+                // console.log(doc.data())
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -61,6 +66,7 @@ export const Profile = () => {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
+        // eslint-disable-next-line
     }, [db, currentUser]);
 
     // useEffect deals with side effects, and when used with useCallback can prevent reloading on functions(like getPosts below)
@@ -82,10 +88,10 @@ export const Profile = () => {
                     {
                         !data.profileImage
                             ?
-                            // if user has an uploaded profile picture
+                            // if not, use their google profile image
                             <img className="img-fluid fill-container profile-img" src={currentUser.image} alt="profile" />
                             :
-                            // if not, use their google profile image
+                            // if user has an uploaded profile picture
                             <img className="img-fluid fill-container profile-img" src={data.profileImage} alt="profile" />
                     }
                 </div>
@@ -122,7 +128,7 @@ export const Profile = () => {
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <textarea className="form-control" name="bio" id="" cols="30" rows="10" placeholder="Type bio here">{data.bio}</textarea>
+                                    <textarea className="form-control" name="bio" id="" cols="30" rows="10" placeholder={data.bio}></textarea>
                                 </div>
                             </div>
                         </div>
